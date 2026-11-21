@@ -4,7 +4,12 @@ import { recipes } from "../../../shared/catalog";
 import { heatLabel } from "../lib/heat";
 defineProps<{ game: Game; stove: Stove }>();
 defineEmits<{ command: [cmd: Command] }>();
+function tableName(game: Game, stove: Stove) {
+  if (stove.portion?.tableId == null) return "";
+  return game.tables.find((t) => t.id === stove.portion?.tableId)?.name ?? "";
+}
 </script>
+
 <template>
   <article class="stove" :class="{ cooking: stove.portion }">
     <div class="stove-head">
@@ -21,6 +26,9 @@ defineEmits<{ command: [cmd: Command] }>();
     </div>
     <template v-if="stove.portion"
       ><strong>{{ recipes[stove.portion.recipe].name }}</strong>
+      <span v-if="stove.portion.tableId !== null" class="table-chip">{{
+        tableName(game, stove)
+      }}</span>
       <p class="timer">
         {{ (game.time - stove.started).toFixed(1)
         }}<small> / {{ recipes[stove.portion.recipe].target }} 秒</small>
@@ -58,7 +66,13 @@ defineEmits<{ command: [cmd: Command] }>();
             $emit('command', { type: 'cook', portion: p.id, stove: stove.id })
           "
         >
-          {{ recipes[p.recipe].icon }} #{{ p.id }} 下锅</button
+          {{ recipes[p.recipe].icon }} #{{ p.id }}
+          {{
+            p.tableId === null
+              ? "散客"
+              : game.tables.find((t) => t.id === p.tableId)?.name
+          }}
+          下锅</button
         ><small
           v-if="
             !game.portions.some((p) => recipes[p.recipe].station === stove.kind)

@@ -1,10 +1,15 @@
 import type { Game } from "../../../shared/types";
 import { recipes } from "../../../shared/catalog";
 import { servingQuality, servicePair } from "../lib/freshness";
+
 export function deliver(g: Game) {
   const { dish, order } = servicePair(g);
   if (!dish || dish.stage !== "plated" || !order) {
-    g.notice = "请选择已装盘菜品和已接订单";
+    g.notice = "请选择已装盘的散客菜品和已接订单";
+    return;
+  }
+  if (dish.tableId !== null) {
+    g.notice = "这是宴席的菜，必须在桌单里整桌交付";
     return;
   }
   if (dish.recipe !== order.recipe) {

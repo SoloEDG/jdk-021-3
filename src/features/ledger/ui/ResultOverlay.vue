@@ -13,7 +13,20 @@ defineEmits<{ restart: [] }>();
       <p>
         本场净收益 <b>¥{{ totals(game).net }}</b>
       </p>
-      <p>完成 {{ game.served }} 单 · 离店 {{ game.missed }} 位</p>
+      <p>
+        完成 {{ game.served }} 单 · 离店 {{ game.missed }} 位 ·
+        宴席交付 {{ game.tables.filter((t) => t.status === "served").length }}/{{
+          game.tables.length
+        }} 桌
+      </p>
+      <p v-if="game.tables.some((t) => t.status !== 'served')">
+        未交付：{{
+          game.tables
+            .filter((t) => t.status !== "served")
+            .map((t) => `${t.name}（${t.status === "rejected" ? "拒绝" : "离席"}）`)
+            .join("、")
+        }}
+      </p>
       <button @click="$emit('restart')">再开一家好餐厅 ↗</button>
     </section>
   </div>

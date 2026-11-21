@@ -1,9 +1,14 @@
-import type { RecipeId, Game, Stove } from "../../../shared/types";
+import type { Game, Stove } from "../../../shared/types";
 import { recipes } from "../../../shared/catalog";
-export function quality(recipe: RecipeId, elapsed: number) {
-  const target = recipes[recipe].target;
-  return Math.max(0, Math.round(100 - Math.abs(elapsed - target) * 12));
+import { cookQuality } from "../../../shared/quality";
+
+export function quality(
+  recipe: Game["portions"][number]["recipe"],
+  elapsed: number,
+) {
+  return cookQuality(recipe, elapsed);
 }
+
 export function heatLabel(g: Game, s: Stove) {
   if (!s.portion) return "空闲";
   const t = g.time - s.started,

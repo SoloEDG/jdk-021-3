@@ -1,11 +1,50 @@
-import type { Game } from "./types";
+import type { Game, TableOrder } from "./types";
+import { zeroIngredients } from "./inventory";
+
+function table(
+  id: number,
+  name: string,
+  arrival: number,
+  windowStart: number,
+  windowEnd: number,
+  early: number,
+  patience: number,
+  recipes: TableOrder["slots"],
+  quote: number,
+  nextSlot: number,
+): TableOrder {
+  return {
+    id,
+    name,
+    arrival,
+    early,
+    windowStart,
+    windowEnd,
+    slots: recipes.map((r) => ({ ...r, id: nextSlot++ })),
+    quote,
+    patience,
+    reserveEnabled: true,
+    reserved: zeroIngredients(),
+    status: "scheduled",
+    seatedAt: null,
+    deadline: null,
+    penaltyBooked: false,
+    servedAt: null,
+    score: null,
+    paid: null,
+    note: "预约已确认，开餐前可调整到店时间、菜单和整桌报价。",
+  };
+}
+
 export function createGame(best = 0): Game {
   return {
     time: 0,
     duration: 180,
     running: false,
+    started: false,
     ended: false,
     nextId: 4,
+    nextSlot: 10,
     selectedOrder: null,
     selectedDish: null,
     orders: [
@@ -34,7 +73,58 @@ export function createGame(best = 0): Game {
         status: "waiting",
       },
     ],
-    stock: { beef: 5, noodle: 5, greens: 6 },
+    tables: [
+      table(
+        1,
+        "陈家晚宴",
+        44,
+        28,
+        72,
+        10,
+        52,
+        [
+          { id: 0, recipe: "steak", spoiled: false },
+          { id: 0, recipe: "pasta", spoiled: false },
+          { id: 0, recipe: "salad", spoiled: false },
+        ],
+        112,
+        1,
+      ),
+      table(
+        2,
+        "周府寿宴",
+        76,
+        58,
+        110,
+        12,
+        46,
+        [
+          { id: 0, recipe: "steak", spoiled: false },
+          { id: 0, recipe: "steak", spoiled: false },
+          { id: 0, recipe: "pasta", spoiled: false },
+        ],
+        132,
+        4,
+      ),
+      table(
+        3,
+        "林氏家宴",
+        104,
+        94,
+        136,
+        8,
+        42,
+        [
+          { id: 0, recipe: "pasta", spoiled: false },
+          { id: 0, recipe: "salad", spoiled: false },
+          { id: 0, recipe: "steak", spoiled: false },
+        ],
+        112,
+        7,
+      ),
+    ],
+    stock: { beef: 4, noodle: 3, greens: 2 },
+    supply: [],
     portions: [],
     stoves: [
       { id: 1, kind: "pan", portion: null, started: 0 },
@@ -46,7 +136,8 @@ export function createGame(best = 0): Game {
     combo: 0,
     served: 0,
     missed: 0,
-    notice: "准备好了吗？开门迎接第一位客人。",
+    notice:
+      "开餐前先规划三桌宴席：到店时间、每桌菜品与整桌报价。客人可能比约定时间更早到店。",
     best,
   };
 }

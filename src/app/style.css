@@ -834,3 +834,306 @@ footer {
     font-size: 8px;
   }
 }
+
+/* ---------- reservation / banquet tables ---------- */
+.banquet-section {
+  margin: 26px 0;
+}
+.banquet-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 13px;
+}
+.banquet-card {
+  background: #fffdf6;
+  border: 1px solid #e1e1d6;
+  border-top: 3px solid #c6d3bb;
+  border-radius: 8px;
+  padding: 14px 15px 13px;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.banquet-card.seated {
+  border-top-color: #da8548;
+  background: #fff9ed;
+}
+.banquet-card.review {
+  border-color: #6e926e;
+  border-top-color: #4f7a55;
+  background: #f4f8ee;
+  box-shadow: 0 4px 14px #4f7a5518;
+}
+.banquet-card.rejected,
+.banquet-card.left {
+  opacity: 0.72;
+  border-top-color: #ba7d65;
+}
+.banquet-card.served {
+  border-top-color: #91aa7d;
+}
+.banquet-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.banquet-top > b {
+  font-size: 13px;
+  letter-spacing: 1px;
+}
+.table-status {
+  font-size: 9px;
+  padding: 2px 7px;
+  border-radius: 20px;
+  background: #edf0e5;
+  color: #62805c;
+}
+.banquet-card.seated .table-status {
+  background: #f8e5c9;
+  color: #a2662f;
+}
+.banquet-card.review .table-status {
+  background: #dcead4;
+  color: #3f6a47;
+}
+.banquet-timing {
+  font-size: 10px;
+  margin: 0;
+  color: #54664a;
+}
+.small-note {
+  font-size: 9px !important;
+  line-height: 1.55;
+  margin: 0;
+}
+.banquet-plan {
+  background: #f7f6ec;
+  border: 1px solid #ecebdd;
+  border-radius: 6px;
+  padding: 8px 9px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.plan-row {
+  display: grid;
+  grid-template-columns: 52px 1fr 44px;
+  align-items: center;
+  gap: 7px;
+  font-size: 9px;
+  color: #7b8a70;
+}
+.plan-row > b {
+  text-align: right;
+  font-size: 10px;
+  color: #315a42;
+}
+.plan-row input[type="range"] {
+  width: 100%;
+  accent-color: #4f7a55;
+  height: 14px;
+}
+.plan-actions {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+.plan-actions .muted {
+  font-size: 8px;
+  line-height: 1.4;
+}
+.slot-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+.slot-row {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  border-bottom: 1px solid #efeee5;
+  padding: 4px 1px;
+  font-size: 10px;
+}
+.slot-row > span {
+  font-size: 19px;
+}
+.slot-main {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  min-width: 0;
+  flex: 1;
+}
+.slot-main > b {
+  font-size: 10px;
+  white-space: nowrap;
+}
+.slot-main > small {
+  font-size: 8px;
+  color: #8d9b7b;
+}
+.slot-row.plated .slot-main > small {
+  color: #4f7a55;
+  font-weight: 600;
+}
+.slot-row.spoiled .slot-main > small {
+  color: #ba7d65;
+  font-weight: 600;
+}
+.slot-row.cooking .slot-main > small {
+  color: #c27a3f;
+}
+.slot-row .tiny {
+  margin-left: auto;
+  flex: none;
+}
+.add-dish {
+  display: flex;
+  gap: 4px;
+  flex-wrap: wrap;
+}
+.add-dish .tiny {
+  flex: 1;
+  white-space: nowrap;
+}
+.banquet-reserve {
+  border-top: 1px dashed #e0e2d3;
+  padding-top: 7px;
+}
+.reserve-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 9px;
+  color: #7b8a70;
+  margin-bottom: 5px;
+}
+.reserve-tags {
+  display: flex;
+  gap: 9px;
+  flex-wrap: wrap;
+  font-size: 8px;
+  color: #8b9781;
+}
+.reserve-tags b {
+  color: #4f7a55;
+  font-weight: 600;
+}
+.reserve-tags em {
+  font-style: normal;
+  color: #a3a897;
+}
+.banquet-review {
+  border-top: 1px solid #d8e3d0;
+  padding-top: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.review-score {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px 9px;
+  font-size: 9px;
+  color: #6c7c63;
+}
+.review-score b {
+  font: 14px Georgia;
+  color: #3f6a47;
+}
+.banquet-actions {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+.banquet-actions .tiny {
+  flex: 1;
+  white-space: nowrap;
+}
+.redo-row .tiny {
+  flex: none;
+}
+.reserve-summary {
+  margin-top: 9px;
+  font-size: 9px;
+  color: #8b9781;
+  background: #f3f2e8;
+  border: 1px solid #e8e8da;
+  border-radius: 5px;
+  padding: 7px 11px;
+}
+.reserve-summary b {
+  color: #4f7a55;
+  margin-left: 7px;
+  font-weight: 600;
+}
+.stock-total {
+  font-size: 8px;
+  color: #a3a897;
+  font-weight: 400;
+  margin-left: 4px;
+}
+.stock-row > b em {
+  font-style: normal;
+  color: #b07a4e;
+  font-size: 9px;
+  margin-left: 2px;
+}
+.prep-hint {
+  font-size: 9px;
+  line-height: 1.6;
+  color: #87916f;
+  margin: 8px 0 0;
+}
+.start-block {
+  font-size: 9px;
+  color: #b07a4e;
+  margin: 8px 0 0;
+}
+.table-chip {
+  display: inline-block;
+  font-size: 8px;
+  background: #e7ecdd;
+  color: #5f7a54;
+  border-radius: 20px;
+  padding: 1px 6px;
+  margin-left: 4px;
+  vertical-align: middle;
+}
+.dish-row.banquet {
+  background: #fbf8ec;
+}
+.banquet-lock {
+  margin-left: auto;
+  font-size: 8px;
+  white-space: nowrap;
+}
+@media (max-width: 1150px) {
+  .banquet-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+@media (max-width: 720px) {
+  .banquet-grid {
+    grid-template-columns: 1fr;
+  }
+}
+.early-warning {
+  display: block;
+  margin-top: 2px;
+  color: #b07a4e;
+  font-weight: 600;
+}
+.reserve-buttons {
+  display: flex;
+  gap: 4px;
+}
+.reserve-buttons .tiny {
+  padding: 4px 6px;
+  font-size: 8px;
+}

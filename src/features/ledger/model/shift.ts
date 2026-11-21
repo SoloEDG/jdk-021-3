@@ -1,11 +1,16 @@
 import type { Game } from "../../../shared/types";
 import { totals } from "../lib/totals";
+import { closeBanquet } from "../../banquet";
 export function closeShift(g: Game) {
   g.running = false;
   g.ended = true;
   g.portions = [];
   g.dishes = [];
   g.stoves.forEach((s) => (s.portion = null));
+  closeBanquet(g);
+  g.tables.forEach((t) => {
+    t.reserved = { beef: 0, noodle: 0, greens: 0 };
+  });
   g.best = Math.max(g.best, totals(g).net);
   g.notice = "午市结束，辛苦了，主厨！";
 }

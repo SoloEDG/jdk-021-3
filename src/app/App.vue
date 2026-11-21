@@ -5,7 +5,9 @@ import { OrdersPanel } from "../features/orders";
 import { PantryPanel } from "../features/pantry";
 import { KitchenPanel } from "../features/kitchen";
 import { ServicePanel } from "../features/service";
+import { BanquetPanel } from "../features/banquet";
 import { LedgerPanel, ResultOverlay, totals } from "../features/ledger";
+import { liveTables, planningIssues } from "../shared/tables";
 const { game, toggle, restart } = useSession();
 </script>
 <template>
@@ -42,11 +44,14 @@ const { game, toggle, restart } = useSession();
             {{
               game.running
                 ? "Ⅱ 暂停营业"
-                : game.time
+                : game.started
                   ? "▶ 继续营业"
                   : "↗ 开始营业"
             }}
           </button>
+          <p v-if="!game.started && planningIssues(game).length" class="start-block">
+            {{ planningIssues(game)[0] }}
+          </p>
         </div>
         <div class="hero-art" aria-hidden="true">
           <div class="herb">✦</div>
@@ -79,7 +84,12 @@ const { game, toggle, restart } = useSession();
           >
         </div>
       </div>
-      <OrdersPanel :game="game" @command="(c) => dispatch(game, c)" />
+      <BanquetPanel :game="game" @command="(c) => dispatch(game, c)" />
+      <OrdersPanel
+        :game="game"
+        :available="liveTables(game).length"
+        @command="(c) => dispatch(game, c)"
+      />
       <div class="workspace">
         <PantryPanel
           :game="game"

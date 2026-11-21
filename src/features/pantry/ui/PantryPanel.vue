@@ -5,7 +5,9 @@ import IngredientShelf from "./IngredientShelf.vue";
 import { preparationIssue } from "../lib/availability";
 defineProps<{ game: Game }>();
 defineEmits<{ command: [cmd: Command] }>();
+const blank = { tableId: null, slotId: null };
 </script>
+
 <template>
   <section class="panel pantry-panel">
     <span class="eyebrow">02 / PREP STATION</span>
@@ -16,17 +18,20 @@ defineEmits<{ command: [cmd: Command] }>();
         (ingredient) => $emit('command', { type: 'restock', ingredient })
       "
     />
+    <p class="prep-hint">
+      宴席预留不占现货：桌单里的「备料」优先扣预留，散客按钮只动可用现货。
+    </p>
     <div class="prep-actions">
       <button
         v-for="r in recipeList"
         :key="r.id"
         class="recipe-button"
-        :disabled="!!preparationIssue(game, r.id)"
+        :disabled="!!preparationIssue(game, r.id, blank)"
         @click="$emit('command', { type: 'prepare', recipe: r.id })"
       >
         <span>{{ r.icon }}</span
         ><b>{{ r.name }}</b
-        ><small>备料 · 消耗1份</small>
+        ><small>散客备料 · 用现货</small>
       </button>
     </div>
     <p class="muted">
